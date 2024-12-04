@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ls_command.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 #define MAX_LINE 80
 #define MAX_ARGS 10
 int main()
@@ -64,12 +66,32 @@ int main()
             if (access(argv[0], X_OK) == 0)
             {
                 printf("execute %s\n", argv[0]);
+                pid_t pid = fork();
+                if (pid < 0)
+                {
+                    perror("fork");
+                }
+                else if (pid == 0)
+                {
+                    if (execvp(argv[0], argv) == -1)
+                    {
+                        perror("execvp");
+                        exit(1);
+                    }
+                }
+                else
+                {
+                    int status;
+                    if (waitpid(pid, &status, 0) == -1)
+                    {
+                        perror("waitpid");
+                    }
+                }
             }
             else
             {
                 printf("command not found %s\n", argv[0]);
             }
-            return 0;
         }
     }
 }
