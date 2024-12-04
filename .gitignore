@@ -1,0 +1,9 @@
+bin
+obj
+./bin/myshell
+
+*.obj
+*.exe
+*.o
+*.out
+*.log
