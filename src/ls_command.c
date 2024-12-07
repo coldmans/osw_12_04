@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include "ls_command.h"
 #include <stdio.h>
 #include <sys/types.h>

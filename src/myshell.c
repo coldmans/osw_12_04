@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ls_command.h"
+#include "cat.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #define MAX_LINE 80
@@ -60,7 +61,8 @@ int main()
         }
         else if (strcmp(argv[0], "cat") == 0)
         {
-        }
+            my_cat(argv[1]);
+                }
         else
         {
             if (access(argv[0], X_OK) == 0)
